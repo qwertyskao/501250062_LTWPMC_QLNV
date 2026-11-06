@@ -1,0 +1,24 @@
+<%- include('header') %>
+
+<h1 class="mt-4">Chi tiết nhân viên</h1>
+
+<div class="card mt-3" style="max-width: 600px;">
+    <div class="card-body">
+        <p><strong>Mã số:</strong> <%= nv._id %></p>
+        <p><strong>Họ tên:</strong> <%= nv.ten %></p>
+        <p><strong>Tuổi:</strong> <%= nv.tuoi %></p>
+
+        <p><strong>Hình ảnh:</strong></p>
+        <% if (nv.hinh) { %>
+            <img src="/hinhnhanvien/<%= nv.hinh %>" alt="Hình nhân viên" width="150" height="150" style="object-fit: cover;">
+        <% } else { %>
+            <p>Chưa có hình ảnh</p>
+        <% } %>
+
+        <div class="mt-3">
+            <a href="/" class="btn btn-primary">Quay lại danh sách</a>
+        </div>
+    </div>
+</div>
+
+<%- include('footer') %>
