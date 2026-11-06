@@ -29,7 +29,8 @@
                 <td>
                     <%= dsnv[i].tuoi %>
                 </td>
-                <td> 
+                <td>
+                    <a href="/chitiet/<%= dsnv[i]._id %>" class="btn btn-info">Xem chi tiết</a>
                     <% if (userID) { %>
                         <a href="/sua/<%= dsnv[i]._id %>"
                             class="btn btn-warning">Sửa
