@@ -1,0 +1,41 @@
+<%- include('header') %>
+
+<h1 class="mt-4">Thống kê nhân viên</h1>
+
+<div class="row mt-4">
+    <div class="col-md-4 mb-3">
+        <div class="card text-white bg-primary">
+            <div class="card-body">
+                <h5 class="card-title">Tổng số nhân viên</h5>
+                <h2><%= tongsonv %></h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-3">
+        <div class="card"><div class="card-body">
+            <h5 class="card-title">Dưới 18 tuổi</h5>
+            <h2><%= duoi18 %></h2>
+        </div></div>
+    </div>
+    <div class="col-md-4 mb-3">
+        <div class="card"><div class="card-body">
+            <h5 class="card-title">Từ 18 đến 30 tuổi</h5>
+            <h2><%= tu18den30 %></h2>
+        </div></div>
+    </div>
+    <div class="col-md-4 mb-3">
+        <div class="card"><div class="card-body">
+            <h5 class="card-title">Từ 31 đến 50 tuổi</h5>
+            <h2><%= tu31den50 %></h2>
+        </div></div>
+    </div>
+    <div class="col-md-4 mb-3">
+        <div class="card"><div class="card-body">
+            <h5 class="card-title">Trên 50 tuổi</h5>
+            <h2><%= tren50 %></h2>
+        </div></div>
+    </div>
+</div>
+<a href="/" class="btn btn-primary mt-3">Quay lại danh sách</a>
+
+<%- include('footer') %>
