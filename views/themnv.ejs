@@ -1,0 +1,12 @@
+<%- include('header') %>
+
+<h1 class="mt-4">Thêm nhân viên</h1>
+
+<form action="/them" method="POST" enctype="multipart/form-data">
+    <input type="text" name="txtTen" required placeholder="Nhập tên nhân viên"><br>
+    <input type="number" name="txtTuoi" required placeholder="Nhập tuổi"><br>
+    <input type="file" name="sampleFile" class="form-control"><br>
+    <button type="submit">Thêm nhân viên</button>
+</form>
+
+<%- include('footer') %>

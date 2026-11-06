@@ -1,0 +1,75 @@
+<%- include('header') %>
+<h1 class="mt-4">Danh sách nhân viên</h1>
+<table class="table table-striped table-hover" style="max-width: 900px;">
+    <thead>
+        <tr>
+            <th>Mã số</th>
+            <th>Tên nhân viên</th>
+            <th>Hình nhân viên</th>
+            <th>Tuổi</th>
+            <th>Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% for (let i = 0; i < dsnv.length; i++) { %>
+            <tr>
+                <td>
+                    <%= dsnv[i]._id %>
+                </td>
+                <td>
+                    <%= dsnv[i].ten %>
+                </td>
+                <td>
+                    <% if (dsnv[i].hinh) { %>
+                        <img src="/hinhnhanvien/<%= dsnv[i].hinh %>" alt="" width="100" height="100" style="object-fit: cover;">
+                    <% } else { %>
+                        <img src="https://placehold.co/100x100" alt="" width="100" height="100" style="object-fit: cover;">
+                    <% } %>
+                </td>
+                <td>
+                    <%= dsnv[i].tuoi %>
+                </td>
+                <td> 
+                    <% if (userID) { %>
+                        <a href="/sua/<%= dsnv[i]._id %>"
+                            class="btn btn-warning">Sửa
+                        </a> 
+                        <a onclick="hoitruockhixoa('<%= dsnv[i]._id %>')" class="btn btn-danger"
+                        >Xóa
+                        </a>
+                    <% } %>
+                </td>
+            </tr>
+        <% } %>
+    </tbody>
+</table>
+
+<div class="clearfix">
+    <% if (tranghientai > 1) { %>
+        <a class = "btn btn-primary float-left" href="/?page=<%= tranghientai - 1 %>">&larr; Trước</a>
+    <% }
+        if (tranghientai < trangcuoicung) { 
+    %>
+        <a class="btn btn-primary float-right" href="/?page=<%= tranghientai + 1 %>" >Sau &rarr;</a>
+    <% } %>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    function hoitruockhixoa(maso) {
+        Swal.fire({
+            title: 'Bạn có chắc chắn muốn xóa nhân viên này?',
+            text: 'Hành động này không thể hoàn tác!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Có, xóa ngay!',
+            cancelButtonText: 'Hủy'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = '/xoa/' + maso;
+            }
+        });
+    }
+</script>
+<%- include('footer') %>

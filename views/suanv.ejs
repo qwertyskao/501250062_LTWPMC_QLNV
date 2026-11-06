@@ -1,0 +1,20 @@
+<%- include('header') %>
+<h1 class="mt-4">Sửa nhân viên</h1>
+<form action="/sua" method="post" enctype="multipart/form-data"> <input
+        type="hidden" name="txtId" value="<%= nv._id %>">
+    <label>Tên nhân viên</label><br> <input type="text" name="txtTen"
+        value="<%= nv.ten %>" class="form-control"><br>
+    <label>Tuổi</label><br> <input type="number" name="txtTuoi"
+        value="<%= nv.tuoi %>" class="form-control"><br>
+    <label>Hình hiện tại</label><br>
+    <% if (nv.hinh) { %>
+     <img src="/hinhnhanvien/<%= nv.hinh %>"
+            alt="Hình nhân viên"><br>
+        <% } else { %><img src="https://placehold.co/100x100"
+            alt="Hình nhân viên" width="100"><br>
+    <% } %><label>Đổi hình mới (không bắt buộc)</label><br>
+    <input type="file" name="sampleFile" class="form-control"
+        style="max-width: 400px;"><br> <button type="submit">Sửa nhân
+        viên</button>
+</form>
+<%- include('footer') %>
