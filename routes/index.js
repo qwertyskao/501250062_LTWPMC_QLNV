@@ -9,6 +9,24 @@ router.get('*', function (req, res, next) {
   next();
 });
 
+// Xem chi tiet nhan vien
+router.get('/chitiet/:maso', function (req, res, next) {
+  let maso = req.params.maso;
+
+  csdl.collection("nhanvien")
+    .findOne({ "_id": new ObjectId(maso) })
+    .then(nv => {
+      if (nv) {
+        res.render('chitietnv.ejs', { nv });
+      } else {
+        res.redirect('/');
+      }
+    })
+    .catch(loi => {
+      res.end("Co loi: " + JSON.stringify(loi));
+    });
+});
+
 //localhost:3000/xoa
 router.get('/xoa/:maso', function (req, res, next) {
   csdl.collection("nhanvien")
