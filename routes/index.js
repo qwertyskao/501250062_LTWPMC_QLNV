@@ -93,6 +93,29 @@ router.get('/', function (req, res, next) {
     });
 });
 
+// Thong ke nhan vien
+router.get('/thongke', function (req, res, next) {
+  Promise.all([
+    csdl.collection('nhanvien').countDocuments(),
+    csdl.collection('nhanvien').countDocuments({ tuoi: { $lt: 18 } }),
+    csdl.collection('nhanvien').countDocuments({ tuoi: { $gte: 18, $lte: 30 } }),
+    csdl.collection('nhanvien').countDocuments({ tuoi: { $gte: 31, $lte: 50 } }),
+    csdl.collection('nhanvien').countDocuments({ tuoi: { $gt: 50 } })
+  ])
+    .then(ketqua => {
+      res.render('thongke.ejs', {
+        tongsonv: ketqua[0],
+        duoi18: ketqua[1],
+        tu18den30: ketqua[2],
+        tu31den50: ketqua[3],
+        tren50: ketqua[4]
+      });
+    })
+    .catch(loi => {
+      res.end("Co loi: " + JSON.stringify(loi));
+    });
+});
+
 router.get('/dangxuat', function (req, res, next) {
   req.session.userID = undefined;
   res.redirect('/');
