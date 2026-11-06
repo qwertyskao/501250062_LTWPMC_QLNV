@@ -9,24 +9,6 @@ router.get('*', function (req, res, next) {
   next();
 });
 
-// Xem chi tiet nhan vien
-router.get('/chitiet/:maso', function (req, res, next) {
-  let maso = req.params.maso;
-
-  csdl.collection("nhanvien")
-    .findOne({ "_id": new ObjectId(maso) })
-    .then(nv => {
-      if (nv) {
-        res.render('chitietnv.ejs', { nv });
-      } else {
-        res.redirect('/');
-      }
-    })
-    .catch(loi => {
-      res.end("Co loi: " + JSON.stringify(loi));
-    });
-});
-
 //localhost:3000/xoa
 router.get('/xoa/:maso', function (req, res, next) {
   csdl.collection("nhanvien")
@@ -39,40 +21,17 @@ router.get('/xoa/:maso', function (req, res, next) {
     });
 });
 
-//localhost:3000/tim
-router.get('/tim', function (req, res, next) {
-  res.render('timnv.ejs');
-});
-
-//localhost:3000/  -> xem danh sách + phân trang + tìm theo tên
+//localhost:3000/  -> xem danh sach + phan trang
 router.get('/', function (req, res, next) {
-  let ten = req.query.txtTen || '';
-  let tuoiTu = req.query.tuoiTu || '';
-  let tuoiDen = req.query.tuoiDen || '';
   let tranghientai = Number(req.query.page) || 1;
   let sonvmoitrang = 3;
 
-  // Dieu kien tim theo ten
-  let dieukien = { "ten": { $regex: ten, $options: "i" } };
-
-  // Dieu kien loc theo tuoi
-  let dieukienTuoi = {};
-  if (tuoiTu !== '' && !isNaN(Number(tuoiTu))) {
-    dieukienTuoi.$gte = Number(tuoiTu);
-  }
-  if (tuoiDen !== '' && !isNaN(Number(tuoiDen))) {
-    dieukienTuoi.$lte = Number(tuoiDen);
-  }
-  if (Object.keys(dieukienTuoi).length > 0) {
-    dieukien.tuoi = dieukienTuoi;
-  }
-
   csdl.collection('nhanvien')
-    .countDocuments(dieukien)
+    .countDocuments()
     .then(tongsonv => {
       const trangcuoicung = Math.ceil(tongsonv / sonvmoitrang);
 
-      return csdl.collection('nhanvien').find(dieukien)
+      return csdl.collection('nhanvien').find()
         .skip((tranghientai - 1) * sonvmoitrang)
         .limit(sonvmoitrang)
         .toArray()
@@ -81,10 +40,7 @@ router.get('/', function (req, res, next) {
             dsnv,
             tranghientai,
             tongsonv,
-            trangcuoicung,
-            txtTen: ten,
-            tuoiTu,
-            tuoiDen
+            trangcuoicung
           });
         });
     })
