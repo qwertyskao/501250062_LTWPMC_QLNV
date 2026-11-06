@@ -21,27 +21,29 @@ router.get('/xoa/:maso', function (req, res, next) {
     });
 });
 
-//localhost:3000/  -> xem danh sach + phan trang
+//localhost:3000/tim
+router.get('/tim', function (req, res, next) {
+  res.render('timnv.ejs');
+});
+
+//localhost:3000/  -> xem danh sách + phân trang + tìm theo tên
 router.get('/', function (req, res, next) {
+  let ten = req.query.txtTen || '';
   let tranghientai = Number(req.query.page) || 1;
   let sonvmoitrang = 3;
+  let dieukien = { "ten": { $regex: ten, $options: "i" } };
 
   csdl.collection('nhanvien')
-    .countDocuments()
+    .countDocuments(dieukien)
     .then(tongsonv => {
       const trangcuoicung = Math.ceil(tongsonv / sonvmoitrang);
 
-      return csdl.collection('nhanvien').find()
+      return csdl.collection('nhanvien').find(dieukien)
         .skip((tranghientai - 1) * sonvmoitrang)
         .limit(sonvmoitrang)
         .toArray()
         .then(dsnv => {
-          res.render('xemdsnv.ejs', {
-            dsnv,
-            tranghientai,
-            tongsonv,
-            trangcuoicung
-          });
+          res.render('xemdsnv.ejs', { dsnv, tranghientai, tongsonv, trangcuoicung });
         });
     })
     .catch(loi => {
