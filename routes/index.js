@@ -47,9 +47,25 @@ router.get('/tim', function (req, res, next) {
 //localhost:3000/  -> xem danh sách + phân trang + tìm theo tên
 router.get('/', function (req, res, next) {
   let ten = req.query.txtTen || '';
+  let tuoiTu = req.query.tuoiTu || '';
+  let tuoiDen = req.query.tuoiDen || '';
   let tranghientai = Number(req.query.page) || 1;
   let sonvmoitrang = 3;
+
+  // Dieu kien tim theo ten
   let dieukien = { "ten": { $regex: ten, $options: "i" } };
+
+  // Dieu kien loc theo tuoi
+  let dieukienTuoi = {};
+  if (tuoiTu !== '' && !isNaN(Number(tuoiTu))) {
+    dieukienTuoi.$gte = Number(tuoiTu);
+  }
+  if (tuoiDen !== '' && !isNaN(Number(tuoiDen))) {
+    dieukienTuoi.$lte = Number(tuoiDen);
+  }
+  if (Object.keys(dieukienTuoi).length > 0) {
+    dieukien.tuoi = dieukienTuoi;
+  }
 
   csdl.collection('nhanvien')
     .countDocuments(dieukien)
@@ -61,7 +77,15 @@ router.get('/', function (req, res, next) {
         .limit(sonvmoitrang)
         .toArray()
         .then(dsnv => {
-          res.render('xemdsnv.ejs', { dsnv, tranghientai, tongsonv, trangcuoicung });
+          res.render('xemdsnv.ejs', {
+            dsnv,
+            tranghientai,
+            tongsonv,
+            trangcuoicung,
+            txtTen: ten,
+            tuoiTu,
+            tuoiDen
+          });
         });
     })
     .catch(loi => {
