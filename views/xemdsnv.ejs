@@ -13,12 +13,8 @@
     <tbody>
         <% for (let i = 0; i < dsnv.length; i++) { %>
             <tr>
-                <td>
-                    <%= dsnv[i]._id %>
-                </td>
-                <td>
-                    <%= dsnv[i].ten %>
-                </td>
+                <td><%= dsnv[i]._id %></td>
+                <td><%= dsnv[i].ten %></td>
                 <td>
                     <% if (dsnv[i].hinh) { %>
                         <img src="/hinhnhanvien/<%= dsnv[i].hinh %>" alt="" width="100" height="100" style="object-fit: cover;">
@@ -26,18 +22,11 @@
                         <img src="https://placehold.co/100x100" alt="" width="100" height="100" style="object-fit: cover;">
                     <% } %>
                 </td>
+                <td><%= dsnv[i].tuoi %></td>
                 <td>
-                    <%= dsnv[i].tuoi %>
-                </td>
-                <td>
-                    <a href="/chitiet/<%= dsnv[i]._id %>" class="btn btn-info">Xem chi tiết</a>
                     <% if (userID) { %>
-                        <a href="/sua/<%= dsnv[i]._id %>"
-                            class="btn btn-warning">Sửa
-                        </a> 
-                        <a onclick="hoitruockhixoa('<%= dsnv[i]._id %>')" class="btn btn-danger"
-                        >Xóa
-                        </a>
+                        <a href="/sua/<%= dsnv[i]._id %>" class="btn btn-warning">Sửa</a>
+                        <a onclick="hoitruockhixoa('<%= dsnv[i]._id %>')" class="btn btn-danger">Xóa</a>
                     <% } %>
                 </td>
             </tr>
@@ -47,10 +36,10 @@
 
 <div class="clearfix">
     <% if (tranghientai > 1) { %>
-        <a class="btn btn-primary float-left" href="/?txtTen=<%= encodeURIComponent(txtTen) %>&tuoiTu=<%= tuoiTu %>&tuoiDen=<%= tuoiDen %>&page=<%= tranghientai - 1 %>">&larr; Trước</a>
+        <a class="btn btn-primary float-left" href="/?page=<%= tranghientai - 1 %>">&larr; Trước</a>
     <% } %>
     <% if (tranghientai < trangcuoicung) { %>
-        <a class="btn btn-primary float-right" href="/?txtTen=<%= encodeURIComponent(txtTen) %>&tuoiTu=<%= tuoiTu %>&tuoiDen=<%= tuoiDen %>&page=<%= tranghientai + 1 %>">Sau &rarr;</a>
+        <a class="btn btn-primary float-right" href="/?page=<%= tranghientai + 1 %>">Sau &rarr;</a>
     <% } %>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
